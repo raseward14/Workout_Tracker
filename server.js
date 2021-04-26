@@ -19,27 +19,6 @@ app.use(routes);
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/workoutdb", { useNewUrlParser: true });
 
-// app.get routes
-// app.get("/notes", (req, res) => {
-//     db.Note.find({})
-//       .then(dbNote => {
-//         res.json(dbNote);
-//       })
-//       .catch(err => {
-//         res.json(err);
-//       });
-//   });
-  
-//   app.get("/user", (req, res) => {
-//     db.User.find({})
-//       .then(dbUser => {
-//         res.json(dbUser);
-//       })
-//       .catch(err => {
-//         res.json(err);
-//       });
-//   });
-
 // Start the server
 app.listen(PORT, () => {
     console.log(`App running on port ${PORT}!`);
