@@ -2,15 +2,6 @@ const router = require("express").Router();
 
 const db = require("../../models");
 
-// create a workout plan
-db.Workout.create({ name: "Workout Plan" })
-  .then(dbWorkout => {
-    console.log(dbWorkout);
-  })
-  .catch(({message}) => {
-    console.log(message);
-  });
-
 // getLastWorkout-- done
 // most recent workout plan
 router.get("/workouts", (req, res) => {
@@ -27,21 +18,18 @@ router.get("/workouts", (req, res) => {
 
 // addExercise
 // post exercise into workout plan
-// router.post("/workouts/?id=", ({ body }, res) => {
-//   // const exercise = new Exercise(body)
-//   // exercise.getWorkout();
-//   db.Exercise.create(body)
-//     console.log(body)
-//     .then(({ _id }) => db.Workout.findOneAndUpdate({}, { $push: { exercises: _id } }, { new: true }))
-//     .then(dbWorkout => {
-//       res.json(dbWorkout);
-//     })
-//     .catch(err => {
-//       res.json(err);
-//     });
-// });
-
-
+router.put("/workouts/:id", ({ params, body }, res) => {
+  db.Workout.findOneAndUpdate(
+    params.id,
+    { $push: { exercise: body }},
+    { new: true })
+    .then(dbWorkout => {
+      res.json(dbWorkout);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
 
 // createWorkout-- done
 // empty no exercises yet
@@ -60,6 +48,5 @@ router.post("/workouts", ({ body }, res) => {
 // based on criteria- date range?
 // view combined weight of multiple exerciese from the past seven workouts on the stats page
 // view total duration of each workout from the past seven workouts on the stats page
-
 
 module.exports = router;
