@@ -1,5 +1,4 @@
 const router = require("express").Router();
-
 const db = require("../../models");
 
 // getLastWorkout-- done
@@ -7,9 +6,8 @@ const db = require("../../models");
 router.get("/workouts", (req, res) => {
   db.Workout.find({})
     .sort({ day: "desc" })
-    .populate("exercise")
     .then((dbWorkout) => {
-      res.json(dbWorkout[0]);
+      res.json(dbWorkout);
     })
     .catch((err) => {
       res.json(err);
@@ -19,9 +17,10 @@ router.get("/workouts", (req, res) => {
 // addExercise
 // post exercise into workout plan
 router.put("/workouts/:id", ({ params, body }, res) => {
-  db.Workout.findOneAndUpdate(
+  db.Workout.findByIdAndUpdate(
     params.id,
-    { $push: { exercise: body }},
+  
+    { $push: { exercises: body }},
     { new: true })
     .then(dbWorkout => {
       res.json(dbWorkout);
