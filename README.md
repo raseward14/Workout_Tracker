@@ -6,7 +6,7 @@ An application that allows the user to create and track daily workouts. It utili
 
 As a user, view, create, and track daily workouts. Each workout is a model, containing an exercise property of datatype array containing exercise objects. A single workout model can contain several exercises. Visiting the page gives the user the option to create a new workout, or continue with their last workout. The most recent workout loads by default. The user then adds exercises to the most recent workout, or a new workout. The dashboard displays the combined weight of multiple exercises, and the total duration of each workout from the past seven days.
 
-**[Get fit here.](https://drive.google.com/file/d/1-Z7d5IIzcBIHGZ7wPe0pSHVjXTYoZc7j/view)**
+**[Get fit here.](https://damp-wildwood-72230.herokuapp.com/)**
 
 To calculate totals, Mongodb aggregation is used. Both the $addFields, and $sum operators are utilized to calculate the total workout duration. The application is hosted by Heroku.
 
