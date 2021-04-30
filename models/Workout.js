@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const WorkoutSchema = new Schema({
   day: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   exercises: [
     {
@@ -34,7 +34,7 @@ const WorkoutSchema = new Schema({
         type: Number,
       },
     },
-  ]
+  ],
 });
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
