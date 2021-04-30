@@ -5,7 +5,7 @@ const db = require("../../models");
 // most recent workout plan
 router.get("/workouts", (req, res) => {
   db.Workout.find({})
-    .sort({ day: "desc" })
+    .sort({ day: "asc" })
     .then((dbWorkout) => {
       res.json(dbWorkout);
     })
@@ -14,18 +14,18 @@ router.get("/workouts", (req, res) => {
     });
 });
 
-// addExercise
+// addExercise-- done
 // post exercise into workout plan
 router.put("/workouts/:id", ({ params, body }, res) => {
   db.Workout.findByIdAndUpdate(
     params.id,
-  
-    { $push: { exercises: body }},
-    { new: true })
-    .then(dbWorkout => {
+    { $push: { exercises: body } },
+    { new: true }
+  )
+    .then((dbWorkout) => {
       res.json(dbWorkout);
     })
-    .catch(err => {
+    .catch((err) => {
       res.json(err);
     });
 });
@@ -34,18 +34,32 @@ router.put("/workouts/:id", ({ params, body }, res) => {
 // empty no exercises yet
 router.post("/workouts", ({ body }, res) => {
   db.Workout.create(body)
-    .then(dbWorkout => {
+    .then((dbWorkout) => {
       res.json(dbWorkout);
     })
-    .catch(err => {
+    .catch((err) => {
       res.json(err);
-    })
-})
+    });
+});
 
 // getWorkoutsInRange
-// get specific workouts
-// based on criteria- date range?
 // view combined weight of multiple exerciese from the past seven workouts on the stats page
 // view total duration of each workout from the past seven workouts on the stats page
+router.get("/workouts/range", (req, res) => {
+  db.Workout.aggregate([
+    {
+      $addFields: {
+        totalDuration: { $sum: "$exercises.duration" },
+      },
+    },
+  ])
+    .then((dbWorkout) => {
+      console.log(dbWorkout);
+      res.json(dbWorkout);
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
 
 module.exports = router;
